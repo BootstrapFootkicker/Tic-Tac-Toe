@@ -25,6 +25,12 @@ body {
 .bottom-row {
 
 }
+.cell{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
 
 #square-1 {
     grid-row: 1;
