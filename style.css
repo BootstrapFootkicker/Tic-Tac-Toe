@@ -8,7 +8,7 @@ body {
 .playing-field {
     display: grid;
     grid-template: repeat(3, minmax(125px, 200px))/repeat(3, minmax(125px, 200px));
-    width: 25%;
+    width: 30%;
 
 }
 
@@ -86,3 +86,4 @@ body {
 #square-3, #square-6, #square-9 {
     border-left: solid 2px black;
 }
+
