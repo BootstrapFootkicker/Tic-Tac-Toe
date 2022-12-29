@@ -41,12 +41,20 @@ const GameLogic = (() => {
             nodelist[5].textContent === nodelist[8].textContent && nodelist[2].textContent !== '';
 
     }
+    const isDiagonalWin = (nodelist) => {
+        if (nodelist[0].textContent === nodelist[4].textContent &&
+            nodelist[4].textContent === nodelist[8].textContent && nodelist[0].textContent !== '') {
+            return true;
+        } else return nodelist[6].textContent === nodelist[4].textContent &&
+            nodelist[4].textContent === nodelist[2].textContent && nodelist[6].textContent !== '';
+
+    }
 
     const isXTurn = () => {
         return turn % 2 === 1;
     }
     return {
-        getTurn, isXTurn, incrementTurn, isEmpty, isHorizontalWin,isVerticalWin
+        getTurn, isXTurn, incrementTurn, isEmpty, isHorizontalWin, isVerticalWin, isDiagonalWin
 
     };
 })
@@ -78,9 +86,12 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     if (GameLogic.isHorizontalWin(Gameboard.getCellList())) {
         console.log(("horizontal win!"))
         alert("horizontal win")
-    }else if (GameLogic.isVerticalWin(Gameboard.getCellList())){
-           console.log(("vertical win!"))
+    } else if (GameLogic.isVerticalWin(Gameboard.getCellList())) {
+        console.log(("vertical win!"))
         alert("vertical win")
+    } else if (GameLogic.isDiagonalWin(Gameboard.getCellList())) {
+        console.log(("diagonal win!"))
+        alert("diagonal win")
     }
 }))
 console.log(Gameboard.getCellList());
