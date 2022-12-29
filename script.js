@@ -12,6 +12,7 @@ const Gameboard = (() => {
 //module pattern
 const GameLogic = (() => {
     let turn = 1;
+    let gameOver = false;
 
     const getTurn = () => turn;
     const incrementTurn = () => {
@@ -20,33 +21,50 @@ const GameLogic = (() => {
     const isEmpty = (cell) => {
         return cell.textContent === ''
     }
+    const isGameOver = () => gameOver;
     const isHorizontalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[1].textContent &&
             nodelist[1].textContent === nodelist[2].textContent && nodelist[0].textContent !== '') {
+            gameOver = true;
             return true;
         } else if (nodelist[3].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[5].textContent && nodelist[3].textContent !== '') {
+            gameOver = true;
             return true;
-        } else return nodelist[6].textContent === nodelist[7].textContent &&
-            nodelist[7].textContent === nodelist[8].textContent && nodelist[6].textContent !== '';
+        } else if (nodelist[6].textContent === nodelist[7].textContent &&
+            nodelist[7].textContent === nodelist[8].textContent && nodelist[6].textContent !== '') {
+            gameOver = true;
+            return true;
+        }
     }
     const isVerticalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[3].textContent &&
             nodelist[3].textContent === nodelist[6].textContent && nodelist[0].textContent !== '') {
+            gameOver = true
             return true;
         } else if (nodelist[1].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[7].textContent && nodelist[1].textContent !== '') {
+            gameOver = true
             return true;
-        } else return nodelist[2].textContent === nodelist[5].textContent &&
-            nodelist[5].textContent === nodelist[8].textContent && nodelist[2].textContent !== '';
+        } else if (nodelist[2].textContent === nodelist[5].textContent &&
+            nodelist[5].textContent === nodelist[8].textContent && nodelist[2].textContent !== '') {
+            gameOver = true
+            return true
+        }
+
 
     }
     const isDiagonalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[8].textContent && nodelist[0].textContent !== '') {
+            gameOver = true
             return true;
-        } else return nodelist[6].textContent === nodelist[4].textContent &&
-            nodelist[4].textContent === nodelist[2].textContent && nodelist[6].textContent !== '';
+        } else if (nodelist[6].textContent === nodelist[4].textContent &&
+            nodelist[4].textContent === nodelist[2].textContent && nodelist[6].textContent !== '') {
+            gameOver = true
+            return true
+        }
+
 
     }
 
@@ -54,7 +72,7 @@ const GameLogic = (() => {
         return turn % 2 === 1;
     }
     return {
-        getTurn, isXTurn, incrementTurn, isEmpty, isHorizontalWin, isVerticalWin, isDiagonalWin
+        getTurn, isXTurn, incrementTurn, isEmpty, isHorizontalWin, isVerticalWin, isDiagonalWin, isGameOver
 
     };
 })
@@ -70,10 +88,15 @@ const Player = (name, playerSign) => {
     }
 }
 
-
+//game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
 
+    if (GameLogic.isGameOver() === true) {
+        alert(" game done!")
+        this.disabled();
+
+    }
     if (GameLogic.isXTurn() && GameLogic.isEmpty(cell)) {
         cell.textContent = 'X';
         GameLogic.incrementTurn();
@@ -94,4 +117,3 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
         alert("diagonal win")
     }
 }))
-console.log(Gameboard.getCellList());
