@@ -3,12 +3,34 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
+    gap: 50px;
+
+}
+
+.sign-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px
+;
+
+}
+
+.playing-field-container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+
+
+
 }
 
 .playing-field {
+
     display: grid;
     grid-template: repeat(3, minmax(125px, 200px))/repeat(3, minmax(125px, 200px));
-    width: 30%;
+
 
 }
 
@@ -25,7 +47,8 @@ body {
 .bottom-row {
 
 }
-.cell{
+
+.cell {
     display: flex;
     align-items: center;
     justify-content: center;
