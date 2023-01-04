@@ -1,6 +1,5 @@
 const xButton = document.querySelector("#x");
-const yButton = document.querySelector("#y");
-
+const yButton = document.querySelector("#o");
 
 
 //module pattern
@@ -12,7 +11,7 @@ const Gameboard = (() => {
         let availableCells = [];
         for (const cell in cells) {
             if (cells[cell].textContent === '') {
-                availableCells.push(cell);
+                availableCells.push(cells[cell]);
             }
         }
         return availableCells;
@@ -81,12 +80,40 @@ const GameLogic = (() => {
 
 
     }
+    const isWin = (nodelist) => {
+        if (isDiagonalWin(nodelist) === true || isVerticalWin(nodelist) === true || isHorizontalWin(nodelist) === true) {
+            return true;
+        }
+    }
+    const disableBoard = (nodelist) => {
+        for (const node in nodelist) {
+            nodelist[node].disabled();
+        }
+    }
+    const enableBoard = (nodelist) => {
+        for (const node in nodelist) {
+            nodelist[node].disabled = false;
+        }
+    }
 
-    const isXTurn = () => {
-        return turn % 2 === 1;
+    const isPlayerTurn = (playerSign) => {
+        if (playerSign === 'X' && (turn % 2) === 1) {
+            return true
+        } else return playerSign === 'O' && turn % 2 === 0;
+
     }
     return {
-        getTurn, isXTurn, incrementTurn, isEmpty, isHorizontalWin, isVerticalWin, isDiagonalWin, isGameOver
+        getTurn,
+        isPlayerTurn,
+        incrementTurn,
+        isEmpty,
+        isHorizontalWin,
+        isVerticalWin,
+        isDiagonalWin,
+        isGameOver,
+        enableBoard,
+        disableBoard,
+        isWin
 
     };
 })
@@ -114,31 +141,44 @@ yButton.addEventListener('click', () => boot.setPlayerSign('Y'));
 //game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
-
+    console.log(GameLogic.getTurn())
     if (GameLogic.isGameOver() === true) {
-        alert(" game done!")
         this.disabled();
+        alert(" game done!")
+
 
     }
-    if (GameLogic.isXTurn() && GameLogic.isEmpty(cell)) {
-        cell.textContent = 'X';
+    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) === true && GameLogic.isEmpty(cell) === true) {
+        // GameLogic.enableBoard(Gameboard.getCellList())
+        cell.textContent = boot.getPlayerSign();
         GameLogic.incrementTurn();
-        console.log(Gameboard.getAvailableCells());
-    } else if (!GameLogic.isXTurn() && GameLogic.isEmpty(cell)) {
-        cell.textContent = "O";
+        let computerChoice = Gameboard.getAvailableCells();
+        let randNum = Math.floor(Math.random() * computerChoice.length);
+        //alert(computerChoice[randNum]);
+        //GameLogic.disableBoard(Gameboard.getCellList());
+
+
+        if (!GameLogic.isWin(Gameboard.getCellList())) {
+            setTimeout(() => computerChoice[randNum].textContent = "O", 500);
+
+        }
         GameLogic.incrementTurn();
-        console.log(Gameboard.getAvailableCells());
+
+        // } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) === false) {
+        //
+        //     let computerChoice = Gameboard.getAvailableCells();
+        //     let randNum = Math.floor(Math.random() * computerChoice.length);
+        //     alert(computerChoice[randNum]);
+        //     //GameLogic.disableBoard(Gameboard.getCellList());
+        //     computerChoice[randNum].textContent = "O"
+        //     GameLogic.incrementTurn();
+        //
+        //
     } else {
         alert("No Way! Spot Already Taken!")
     }
-    if (GameLogic.isHorizontalWin(Gameboard.getCellList())) {
-        console.log(("horizontal win!"))
-        alert("horizontal win")
-    } else if (GameLogic.isVerticalWin(Gameboard.getCellList())) {
-        console.log(("vertical win!"))
-        alert("vertical win")
-    } else if (GameLogic.isDiagonalWin(Gameboard.getCellList())) {
-        console.log(("diagonal win!"))
-        alert("diagonal win")
+    if (GameLogic.isWin(Gameboard.getCellList())) {
+        console.log((" win!"))
+        alert("win win")
     }
 }))
