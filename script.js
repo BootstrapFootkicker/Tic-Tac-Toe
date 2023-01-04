@@ -1,10 +1,24 @@
+const xButton = document.querySelector("#x");
+const yButton = document.querySelector("#y");
+
+
+
 //module pattern
 const Gameboard = (() => {
     let cells = document.querySelectorAll(".cell");
 
     const getCellList = () => cells;
+    const getAvailableCells = () => {
+        let availableCells = [];
+        for (const cell in cells) {
+            if (cells[cell].textContent === '') {
+                availableCells.push(cell);
+            }
+        }
+        return availableCells;
+    }
     return {
-        getCellList,
+        getCellList, getAvailableCells
 
     };
 })();
@@ -79,14 +93,23 @@ const GameLogic = (() => {
 ();
 
 //Factory Function
-const Player = (name, playerSign) => {
+const Player = (name) => {
+    let playerSign = "X";
     const getName = () => name;
+    const setPlayerSign = (sign) => {
+        playerSign = sign
+
+    }
     const getPlayerSign = () => playerSign
 
     return {
-        getName, getPlayerSign
+        getName, getPlayerSign, setPlayerSign
     }
 }
+let boot = Player('Boot');
+xButton.addEventListener('click', () => boot.setPlayerSign('X'));
+yButton.addEventListener('click', () => boot.setPlayerSign('Y'));
+
 
 //game-board event
 let cellNodeList = Gameboard.getCellList();
@@ -100,9 +123,11 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     if (GameLogic.isXTurn() && GameLogic.isEmpty(cell)) {
         cell.textContent = 'X';
         GameLogic.incrementTurn();
+        console.log(Gameboard.getAvailableCells());
     } else if (!GameLogic.isXTurn() && GameLogic.isEmpty(cell)) {
         cell.textContent = "O";
         GameLogic.incrementTurn();
+        console.log(Gameboard.getAvailableCells());
     } else {
         alert("No Way! Spot Already Taken!")
     }
