@@ -1,5 +1,5 @@
 const xButton = document.querySelector("#x");
-const yButton = document.querySelector("#o");
+const oButton = document.querySelector("#o");
 
 
 //module pattern
@@ -82,6 +82,7 @@ const GameLogic = (() => {
     }
     const isWin = (nodelist) => {
         if (isDiagonalWin(nodelist) === true || isVerticalWin(nodelist) === true || isHorizontalWin(nodelist) === true) {
+            gameOver = true
             return true;
         }
     }
@@ -97,9 +98,9 @@ const GameLogic = (() => {
     }
 
     const isPlayerTurn = (playerSign) => {
-        if (playerSign === 'X' && (turn % 2) === 1) {
+        if (playerSign === 'X' && (turn % 2) === 1 && turn > 0) {
             return true
-        } else return playerSign === 'O' && turn % 2 === 0;
+        } else return playerSign === 'O' && turn % 2 === 0 && turn > 0;
 
     }
     return {
@@ -119,6 +120,26 @@ const GameLogic = (() => {
 })
 ();
 
+//Module Function
+const computerPlayer = (() => {
+    let computerSign = "O";
+
+    const getComputerSign = () => computerSign
+    const setComputerSign = (sign) => {
+        computerSign = sign;
+    }
+    const computerPlay = (nodelist) => {
+        let randNum = Math.floor(Math.random() * nodelist.length);
+        setTimeout(() => {
+            nodelist[randNum].textContent = "O"
+            nodelist[randNum].click()
+        }, 500);
+    }
+
+    return {getComputerSign, setComputerSign, computerPlay,}
+
+})();
+
 //Factory Function
 const Player = (name) => {
     let playerSign = "X";
@@ -128,57 +149,39 @@ const Player = (name) => {
 
     }
     const getPlayerSign = () => playerSign
-
+    const playerPlay = (cell) => {
+        cell.textContent = playerSign;
+    }
     return {
-        getName, getPlayerSign, setPlayerSign
+        getName, getPlayerSign, setPlayerSign, playerPlay
     }
 }
+
 let boot = Player('Boot');
 xButton.addEventListener('click', () => boot.setPlayerSign('X'));
-yButton.addEventListener('click', () => boot.setPlayerSign('Y'));
+oButton.addEventListener('click', () => boot.setPlayerSign('O'));
 
 
 //game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
-    console.log(GameLogic.getTurn())
-    if (GameLogic.isGameOver() === true) {
-        this.disabled();
+    if (GameLogic.isWin(Gameboard.getCellList())) {
         alert(" game done!")
 
+        this.disabled();
 
-    }
-    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) === true && GameLogic.isEmpty(cell) === true) {
-        // GameLogic.enableBoard(Gameboard.getCellList())
-        cell.textContent = boot.getPlayerSign();
-        GameLogic.incrementTurn();
-        let computerChoice = Gameboard.getAvailableCells();
-        let randNum = Math.floor(Math.random() * computerChoice.length);
-        //alert(computerChoice[randNum]);
-        //GameLogic.disableBoard(Gameboard.getCellList());
-
-
-        if (!GameLogic.isWin(Gameboard.getCellList())) {
-            setTimeout(() => computerChoice[randNum].textContent = "O", 500);
-
-        }
+    } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
+        boot.playerPlay(cell);
         GameLogic.incrementTurn();
 
-        // } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) === false) {
-        //
-        //     let computerChoice = Gameboard.getAvailableCells();
-        //     let randNum = Math.floor(Math.random() * computerChoice.length);
-        //     alert(computerChoice[randNum]);
-        //     //GameLogic.disableBoard(Gameboard.getCellList());
-        //     computerChoice[randNum].textContent = "O"
-        //     GameLogic.incrementTurn();
-        //
-        //
-    } else {
-        alert("No Way! Spot Already Taken!")
+        computerPlayer.computerPlay(Gameboard.getAvailableCells());
+        GameLogic.incrementTurn();
+
+
     }
-    if (GameLogic.isWin(Gameboard.getCellList())) {
-        console.log((" win!"))
-        alert("win win")
-    }
+
+
 }))
+
+//get around computer not getting win b4 click
+
