@@ -98,9 +98,9 @@ const GameLogic = (() => {
     }
 
     const isPlayerTurn = (playerSign) => {
-        if (playerSign === 'X' && (turn % 2) === 1 && turn > 0) {
+        if (playerSign === 'X' && (turn % 2) === 1) {
             return true
-        } else return playerSign === 'O' && turn % 2 === 0 && turn > 0;
+        } else return playerSign === 'O' && turn % 2 === 0;
 
     }
     return {
