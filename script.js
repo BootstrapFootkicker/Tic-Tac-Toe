@@ -1,5 +1,6 @@
 const xButton = document.querySelector("#x");
 const oButton = document.querySelector("#o");
+const overlay = document.querySelector('#overlay');
 
 
 //module pattern
@@ -16,8 +17,9 @@ const Gameboard = (() => {
         }
         return availableCells;
     }
+
     return {
-        getCellList, getAvailableCells
+        getCellList, getAvailableCells,
 
     };
 })();
@@ -86,16 +88,7 @@ const GameLogic = (() => {
             return true;
         }
     }
-    const disableBoard = (nodelist) => {
-        for (const node in nodelist) {
-            nodelist[node].disabled();
-        }
-    }
-    const enableBoard = (nodelist) => {
-        for (const node in nodelist) {
-            nodelist[node].disabled = false;
-        }
-    }
+
 
     const isPlayerTurn = (playerSign) => {
         if (playerSign === 'X' && (turn % 2) === 1) {
@@ -112,8 +105,6 @@ const GameLogic = (() => {
         isVerticalWin,
         isDiagonalWin,
         isGameOver,
-        enableBoard,
-        disableBoard,
         isWin
 
     };
@@ -132,7 +123,7 @@ const computerPlayer = (() => {
         let randNum = Math.floor(Math.random() * nodelist.length);
         setTimeout(() => {
             nodelist[randNum].textContent = "O"
-            nodelist[randNum].click()
+            //nodelist[randNum].click()
         }, 500);
     }
 
@@ -165,23 +156,39 @@ oButton.addEventListener('click', () => boot.setPlayerSign('O'));
 //game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
-    if (GameLogic.isWin(Gameboard.getCellList())) {
-        alert(" game done!")
+    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
 
-        this.disabled();
+        boot.playerPlay(cell)
+        overlay.classList.add('active');
+        GameLogic.incrementTurn()
 
-    } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
-        boot.playerPlay(cell);
-        GameLogic.incrementTurn();
+    }
+    if (overlay.classList.contains('active')) {
+        computerPlayer.computerPlay(Gameboard.getAvailableCells())
 
-        computerPlayer.computerPlay(Gameboard.getAvailableCells());
-        GameLogic.incrementTurn();
-
+        GameLogic.incrementTurn()
+        setTimeout(()=> {overlay.classList.remove('active')},1500)
 
     }
 
+    // if (GameLogic.isWin(Gameboard.getCellList())) {
+    //     alert(" game done!")
+    //
+    //     this.disabled();
+    //
+    // } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
+    //     boot.playerPlay(cell);
+    //     GameLogic.incrementTurn();
+    //
+    //     computerPlayer.computerPlay(Gameboard.getAvailableCells());
+    //     GameLogic.incrementTurn();
+    //
+    //
+    // }
+
 
 }))
+
 
 //get around computer not getting win b4 click
 

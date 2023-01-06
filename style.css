@@ -22,7 +22,6 @@ body {
     align-items: center;
 
 
-
 }
 
 .playing-field {
@@ -52,6 +51,25 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 3rem;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    transition: 200ms ease-in-out;
+    pointer-events: none;
+
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+
 }
 
 #square-1 {
