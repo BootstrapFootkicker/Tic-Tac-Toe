@@ -123,7 +123,7 @@ const computerPlayer = (() => {
         let randNum = Math.floor(Math.random() * nodelist.length);
         setTimeout(() => {
             nodelist[randNum].textContent = "O"
-            //nodelist[randNum].click()
+
         }, 500);
     }
 
