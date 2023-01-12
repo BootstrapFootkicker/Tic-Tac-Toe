@@ -11,10 +11,16 @@ const Gameboard = (() => {
         let availableCells = [];
         for (const cell in cells) {
             if (cells[cell].textContent === '') {
-                console.log(cells[cell])
+
+                //stops unnecessary nodes from being added to nodelist...i.e only allows actual cells to be added
+                if (cells[cell].length>=0){
+                    continue
+                }
                 availableCells.push(cells[cell]);
-                //reason for error
+
+
             }
+    
 
         }
         return availableCells;
@@ -24,6 +30,7 @@ const Gameboard = (() => {
         GameLogic.setGameOver(false)
         overlay.textContent = ''
         for (const node in nodelist) {
+
             nodelist[node].textContent = "";
         }
 
@@ -173,9 +180,7 @@ oButton.addEventListener('click', () => boot.setPlayerSign('O'));
 //game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
-    // if (GameLogic.isWin(Gameboard.getCellList()) === true) {
-    //     overlay.textContent = "WINNER!"
-    // }
+
     if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true) {
         boot.playerPlay(cell)
         overlay.classList.add('active');
