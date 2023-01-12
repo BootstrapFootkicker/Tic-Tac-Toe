@@ -64,11 +64,18 @@ body {
     transition: 200ms ease-in-out;
     pointer-events: none;
 
+
 }
 
 #overlay.active {
     opacity: 1;
     pointer-events: all;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+
 
 }
 

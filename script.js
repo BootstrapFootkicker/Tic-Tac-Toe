@@ -6,20 +6,31 @@ const overlay = document.querySelector('#overlay');
 //module pattern
 const Gameboard = (() => {
     let cells = document.querySelectorAll(".cell");
-
     const getCellList = () => cells;
     const getAvailableCells = () => {
         let availableCells = [];
         for (const cell in cells) {
             if (cells[cell].textContent === '') {
+                console.log(cells[cell])
                 availableCells.push(cells[cell]);
+                //reason for error
             }
+
         }
         return availableCells;
     }
+    const clearBoard = (nodelist) => {
+        GameLogic.setTurn(1);
+        GameLogic.setGameOver(false)
+        overlay.textContent = ''
+        for (const node in nodelist) {
+            nodelist[node].textContent = "";
+        }
+
+    }
 
     return {
-        getCellList, getAvailableCells,
+        getCellList, getAvailableCells, clearBoard
 
     };
 })();
@@ -28,7 +39,12 @@ const Gameboard = (() => {
 const GameLogic = (() => {
     let turn = 1;
     let gameOver = false;
-
+    const setGameOver = (boolValue) => {
+        gameOver = boolValue;
+    }
+    const setTurn = (number) => {
+        turn = number;
+    }
     const getTurn = () => turn;
     const incrementTurn = () => {
         turn += 1;
@@ -40,30 +56,31 @@ const GameLogic = (() => {
     const isHorizontalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[1].textContent &&
             nodelist[1].textContent === nodelist[2].textContent && nodelist[0].textContent !== '') {
-            gameOver = true;
+            overlay.textContent = (overlay.textContent = (nodelist[2].textContent + " horizontal win"));
+
             return true;
         } else if (nodelist[3].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[5].textContent && nodelist[3].textContent !== '') {
-            gameOver = true;
+            overlay.textContent = (nodelist[4].textContent + " horizontal win");
             return true;
         } else if (nodelist[6].textContent === nodelist[7].textContent &&
             nodelist[7].textContent === nodelist[8].textContent && nodelist[6].textContent !== '') {
-            gameOver = true;
+            overlay.textContent = (nodelist[6].textContent + " horizontal win");
             return true;
         }
     }
     const isVerticalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[3].textContent &&
             nodelist[3].textContent === nodelist[6].textContent && nodelist[0].textContent !== '') {
-            gameOver = true
+            overlay.textContent = (nodelist[0].textContent + " vertical win");
             return true;
         } else if (nodelist[1].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[7].textContent && nodelist[1].textContent !== '') {
-            gameOver = true
+            overlay.textContent = (nodelist[4].textContent + " vertical win");
             return true;
         } else if (nodelist[2].textContent === nodelist[5].textContent &&
             nodelist[5].textContent === nodelist[8].textContent && nodelist[2].textContent !== '') {
-            gameOver = true
+            overlay.textContent = (nodelist[2].textContent + " vertical win");
             return true
         }
 
@@ -72,11 +89,11 @@ const GameLogic = (() => {
     const isDiagonalWin = (nodelist) => {
         if (nodelist[0].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[8].textContent && nodelist[0].textContent !== '') {
-            gameOver = true
+            overlay.textContent = (nodelist[0].textContent + " diagonal win");
             return true;
         } else if (nodelist[6].textContent === nodelist[4].textContent &&
             nodelist[4].textContent === nodelist[2].textContent && nodelist[6].textContent !== '') {
-            gameOver = true
+            overlay.textContent = (nodelist[6].textContent + " diagonal win");
             return true
         }
 
@@ -105,7 +122,7 @@ const GameLogic = (() => {
         isVerticalWin,
         isDiagonalWin,
         isGameOver,
-        isWin
+        isWin, setTurn, setGameOver
 
     };
 })
@@ -156,39 +173,39 @@ oButton.addEventListener('click', () => boot.setPlayerSign('O'));
 //game-board event
 let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
-    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
-
+    // if (GameLogic.isWin(Gameboard.getCellList()) === true) {
+    //     overlay.textContent = "WINNER!"
+    // }
+    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true) {
         boot.playerPlay(cell)
         overlay.classList.add('active');
         GameLogic.incrementTurn()
+        GameLogic.isWin(Gameboard.getCellList())
+
 
     }
-    if (overlay.classList.contains('active')) {
+    if (overlay.classList.contains('active') && GameLogic.isGameOver() !== true) {
         computerPlayer.computerPlay(Gameboard.getAvailableCells())
 
+        setTimeout(() => {
+            overlay.classList.remove('active')
+        }, 1500)
         GameLogic.incrementTurn()
-        setTimeout(()=> {overlay.classList.remove('active')},1500)
+        GameLogic.isWin(Gameboard.getCellList())
 
     }
-
-    // if (GameLogic.isWin(Gameboard.getCellList())) {
-    //     alert(" game done!")
-    //
-    //     this.disabled();
-    //
-    // } else if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell)) {
-    //     boot.playerPlay(cell);
-    //     GameLogic.incrementTurn();
-    //
-    //     computerPlayer.computerPlay(Gameboard.getAvailableCells());
-    //     GameLogic.incrementTurn();
-    //
-    //
-    // }
-
 
 }))
 
+overlay.addEventListener('click', () => {
+    if (GameLogic.isWin(Gameboard.getCellList())) {
 
+
+        Gameboard.clearBoard(Gameboard.getCellList())
+        overlay.classList.remove('active')
+
+
+    }
+})
 //get around computer not getting win b4 click
 
