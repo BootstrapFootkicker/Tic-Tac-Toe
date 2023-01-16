@@ -13,14 +13,14 @@ const Gameboard = (() => {
             if (cells[cell].textContent === '') {
 
                 //stops unnecessary nodes from being added to nodelist...i.e only allows actual cells to be added
-                if (cells[cell].length>=0){
+                if (cells[cell].length >= 0) {
                     continue
                 }
                 availableCells.push(cells[cell]);
 
 
             }
-    
+
 
         }
         return availableCells;
@@ -109,6 +109,8 @@ const GameLogic = (() => {
     const isWin = (nodelist) => {
         if (isDiagonalWin(nodelist) === true || isVerticalWin(nodelist) === true || isHorizontalWin(nodelist) === true) {
             gameOver = true
+            //if computer wins overlay still gets set to active
+            overlay.classList.add('active')
             return true;
         }
     }
@@ -129,7 +131,9 @@ const GameLogic = (() => {
         isVerticalWin,
         isDiagonalWin,
         isGameOver,
-        isWin, setTurn, setGameOver
+        isWin,
+        setTurn,
+        setGameOver
 
     };
 })
@@ -149,6 +153,7 @@ const computerPlayer = (() => {
             nodelist[randNum].textContent = "O"
 
         }, 500);
+
     }
 
     return {getComputerSign, setComputerSign, computerPlay,}
@@ -179,10 +184,18 @@ oButton.addEventListener('click', () => boot.setPlayerSign('O'));
 
 //game-board event
 let cellNodeList = Gameboard.getCellList();
+
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
+    //check if computer wins
+    setInterval(() => {
+
+        GameLogic.isWin(Gameboard.getCellList())
+
+    }, 5)
+
 
     if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true) {
-        boot.playerPlay(cell)
+       boot.playerPlay(cell)
         overlay.classList.add('active');
         GameLogic.incrementTurn()
         GameLogic.isWin(Gameboard.getCellList())
@@ -192,13 +205,16 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     if (overlay.classList.contains('active') && GameLogic.isGameOver() !== true) {
         computerPlayer.computerPlay(Gameboard.getAvailableCells())
 
+    //prevents player from playing before computers turn is over
         setTimeout(() => {
             overlay.classList.remove('active')
         }, 1500)
         GameLogic.incrementTurn()
-        GameLogic.isWin(Gameboard.getCellList())
+
+
 
     }
+
 
 }))
 
@@ -212,5 +228,5 @@ overlay.addEventListener('click', () => {
 
     }
 })
-//get around computer not getting win b4 click
+
 
