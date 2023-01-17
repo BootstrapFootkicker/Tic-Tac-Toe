@@ -28,6 +28,7 @@ const Gameboard = (() => {
     const clearBoard = (nodelist) => {
         GameLogic.setTurn(1);
         GameLogic.setGameOver(false)
+        GameLogic.setDraw(false);
         overlay.textContent = ''
         for (const node in nodelist) {
 
@@ -46,6 +47,10 @@ const Gameboard = (() => {
 const GameLogic = (() => {
     let turn = 1;
     let gameOver = false;
+    let draw = false;
+    const setDraw = (boolValue) => {
+        draw = boolValue;
+    }
     const setGameOver = (boolValue) => {
         gameOver = boolValue;
     }
@@ -110,8 +115,18 @@ const GameLogic = (() => {
         if (isDiagonalWin(nodelist) === true || isVerticalWin(nodelist) === true || isHorizontalWin(nodelist) === true) {
             gameOver = true
             //if computer wins overlay still gets set to active
-            overlay.classList.add('active')
+            overlay.classList.add('activeEnd')
             return true;
+        }
+
+    }
+    const isDraw = () => {
+        if (turn === 10) {
+            gameOver = true;
+            overlay.textContent = ("Draw!");
+            overlay.classList.add('activeEnd')
+            return true
+
         }
     }
 
@@ -133,7 +148,8 @@ const GameLogic = (() => {
         isGameOver,
         isWin,
         setTurn,
-        setGameOver
+        setGameOver,
+        isDraw, setDraw
 
     };
 })
@@ -152,7 +168,7 @@ const computerPlayer = (() => {
         setTimeout(() => {
             nodelist[randNum].textContent = "O"
 
-        }, 500);
+        }, 300);
 
     }
 
@@ -188,29 +204,28 @@ let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     //check if computer wins
     setInterval(() => {
-
-        GameLogic.isWin(Gameboard.getCellList())
+        GameLogic.isDraw(Gameboard.getCellList());
+        GameLogic.isWin(Gameboard.getCellList());
 
     }, 5)
 
 
     if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true) {
-       boot.playerPlay(cell)
+        boot.playerPlay(cell)
         overlay.classList.add('active');
         GameLogic.incrementTurn()
         GameLogic.isWin(Gameboard.getCellList())
 
 
     }
-    if (overlay.classList.contains('active') && GameLogic.isGameOver() !== true) {
+    if (overlay.classList.contains('active') && GameLogic.isGameOver() !== true && GameLogic.isDraw() !== true) {
         computerPlayer.computerPlay(Gameboard.getAvailableCells())
 
-    //prevents player from playing before computers turn is over
+        //prevents player from playing before computers turn is over
         setTimeout(() => {
             overlay.classList.remove('active')
-        }, 1500)
+        }, 450)
         GameLogic.incrementTurn()
-
 
 
     }
@@ -219,10 +234,11 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
 }))
 
 overlay.addEventListener('click', () => {
-    if (GameLogic.isWin(Gameboard.getCellList())) {
+    if (GameLogic.isWin(Gameboard.getCellList()) || GameLogic.isDraw() === true) {
 
 
         Gameboard.clearBoard(Gameboard.getCellList())
+        overlay.classList.remove('activeEnd')
         overlay.classList.remove('active')
 
 
