@@ -163,10 +163,14 @@ const computerPlayer = (() => {
     const setComputerSign = (sign) => {
         computerSign = sign;
     }
-    const computerPlay = (nodelist) => {
+    const computerPlay = (nodelist, player) => {
         let randNum = Math.floor(Math.random() * nodelist.length);
         setTimeout(() => {
-            nodelist[randNum].textContent = "O"
+            if (player.getPlayerSign() === "X") {
+                nodelist[randNum].textContent = "O"
+            } else {
+                nodelist[randNum].textContent = "X"
+            }
 
         }, 300);
 
@@ -204,13 +208,17 @@ let cellNodeList = Gameboard.getCellList();
 cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     //check if computer wins
     setInterval(() => {
+        if (GameLogic.getTurn() === 1 && boot.getPlayerSign() === "O") {
+            computerPlayer.computerPlay(Gameboard.getAvailableCells(), boot)
+            GameLogic.incrementTurn();
+        }
         GameLogic.isDraw(Gameboard.getCellList());
         GameLogic.isWin(Gameboard.getCellList());
 
     }, 5)
 
 
-    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true) {
+    if (GameLogic.isPlayerTurn(boot.getPlayerSign()) && GameLogic.isEmpty(cell) && GameLogic.isGameOver() !== true && GameLogic.isDraw() !== true) {
         boot.playerPlay(cell)
         overlay.classList.add('active');
         GameLogic.incrementTurn()
@@ -219,7 +227,7 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
 
     }
     if (overlay.classList.contains('active') && GameLogic.isGameOver() !== true && GameLogic.isDraw() !== true) {
-        computerPlayer.computerPlay(Gameboard.getAvailableCells())
+        computerPlayer.computerPlay(Gameboard.getAvailableCells(), boot)
 
         //prevents player from playing before computers turn is over
         setTimeout(() => {
@@ -245,4 +253,14 @@ overlay.addEventListener('click', () => {
     }
 })
 
+xButton.addEventListener('click', () => {
+    Gameboard.clearBoard(Gameboard.getCellList())
+    boot.setPlayerSign("X")
 
+})
+
+oButton.addEventListener('click', () => {
+    Gameboard.clearBoard(Gameboard.getCellList())
+    boot.setPlayerSign("O")
+
+})
