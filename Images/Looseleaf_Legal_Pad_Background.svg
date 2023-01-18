@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="1280" height="1024" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Drafted with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <!-- Edited by Andrew -->
+ <g>
+  <title>Yellow Looseleaf Notepaper</title>
+  <desc>Reminiscent of a yellow Legal Pad, consists of yellow field, salmon colored double-left and single-right margins, teal lines, and white “punched holes”; this would make a useful repeatable, scalable background image.</desc>
+  <rect id="background" width="1280" height="1024" x="0" y="0" stroke="#ffffaa" fill="#ffffaa"/>
+
+  <line id="line1" y2="90" x2="1278" y1="90" x1="2" stroke="#008fff"/>
+  <line id="line2" y2="110" x2="1278" y1="110" x1="2" stroke="#008fff"/>
+  <line id="line3" y2="130" x2="1278" y1="130" x1="2" stroke="#008fff"/>
+  <line id="line4" y2="150" x2="1278" y1="150" x1="2" stroke="#008fff"/>
+  <line id="line5" y2="170" x2="1278" y1="170" x1="2" stroke="#008fff"/>
+  <line id="line6" y2="190" x2="1278" y1="190" x1="2" stroke="#008fff"/>
+  <line id="line7" y2="210" x2="1278" y1="210" x1="2" stroke="#008fff"/>
+  <line id="line8" y2="230" x2="1278" y1="230" x1="2" stroke="#008fff"/>
+  <line id="line9" y2="250" x2="1278" y1="250" x1="2" stroke="#008fff"/>
+  <line id="line10" y2="270" x2="1278" y1="270" x1="2" stroke="#008fff"/>
+  <line id="line11" y2="290" x2="1278" y1="290" x1="2" stroke="#008fff"/>
+  <line id="line12" y2="310" x2="1278" y1="310" x1="2" stroke="#008fff"/>
+  <line id="line13" y2="330" x2="1278" y1="330" x1="2" stroke="#008fff"/>
+  <line id="line14" y2="350" x2="1278" y1="350" x1="2" stroke="#008fff"/>
+  <line id="line15" y2="370" x2="1278" y1="370" x1="2" stroke="#008fff"/>
+  <line id="line16" y2="390" x2="1278" y1="390" x1="2" stroke="#008fff"/>
+  <line id="line17" y2="410" x2="1278" y1="410" x1="2" stroke="#008fff"/>
+  <line id="line18" y2="430" x2="1278" y1="430" x1="2" stroke="#008fff"/>
+  <line id="line19" y2="450" x2="1278" y1="450" x1="2" stroke="#008fff"/>
+  <line id="line20" y2="470" x2="1278" y1="470" x1="2" stroke="#008fff"/>
+  <line id="line21" y2="490" x2="1278" y1="490" x1="2" stroke="#008fff"/>
+  <line id="line22" y2="510" x2="1278" y1="510" x1="2" stroke="#008fff"/>
+  <line id="line23" y2="530" x2="1278" y1="530" x1="2" stroke="#008fff"/>
+  <line id="line24" y2="550" x2="1278" y1="550" x1="2" stroke="#008fff"/>
+  <line id="line25" y2="570" x2="1278" y1="570" x1="2" stroke="#008fff"/>
+  <line id="line26" y2="590" x2="1278" y1="590" x1="2" stroke="#008fff"/>
+  <line id="line27" y2="610" x2="1278" y1="610" x1="2" stroke="#008fff"/>
+  <line id="line28" y2="630" x2="1278" y1="630" x1="2" stroke="#008fff"/>
+  <line id="line29" y2="650" x2="1278" y1="650" x1="2" stroke="#008fff"/>
+  <line id="line30" y2="670" x2="1278" y1="670" x1="2" stroke="#008fff"/>
+  <line id="line31" y2="690" x2="1278" y1="690" x1="2" stroke="#008fff"/>
+  <line id="line32" y2="710" x2="1278" y1="710" x1="2" stroke="#008fff"/>
+  <line id="line33" y2="730" x2="1278" y1="730" x1="2" stroke="#008fff"/>
+  <line id="line34" y2="750" x2="1278" y1="750" x1="2" stroke="#008fff"/>
+  <line id="line35" y2="770" x2="1278" y1="770" x1="2" stroke="#008fff"/>
+  <line id="line36" y2="790" x2="1278" y1="790" x1="2" stroke="#008fff"/>
+  <line id="line37" y2="810" x2="1278" y1="810" x1="2" stroke="#008fff"/>
+  <line id="line38" y2="830" x2="1278" y1="830" x1="2" stroke="#008fff"/>
+  <line id="line39" y2="850" x2="1278" y1="850" x1="2" stroke="#008fff"/>
+  <line id="line40" y2="870" x2="1278" y1="870" x1="2" stroke="#008fff"/>
+  <line id="line41" y2="890" x2="1278" y1="890" x1="2" stroke="#008fff"/>
+  <line id="line42" y2="910" x2="1278" y1="910" x1="2" stroke="#008fff"/>
+  <line id="line43" y2="930" x2="1278" y1="930" x1="2" stroke="#008fff"/>
+  <line id="line44" y2="950" x2="1278" y1="950" x1="2" stroke="#008fff"/>
+  <line id="line45" y2="970" x2="1278" y1="970" x1="2" stroke="#008fff"/>
+  <line id="line46" y2="990" x2="1278" y1="990" x1="2" stroke="#008fff"/>
+  <line id="line47" y2="1010" x2="1278" y1="1010" x1="2" stroke="#008fff"/>
+
+  <line id="leftMargin1" y1="0" y2="1024" x1="70" x2="70" stroke="#fa8072"/>
+  <line id="leftMargin2" y1="0" y2="1024" x1="80" x2="80" stroke="#fa8072"/>
+  <line id="rightMargin" y1="0" y2="1024" x1="1200" x2="1200" stroke="#fa8072"/>
+
+  <ellipse id="hole1" ry="12" rx="12" cy="110" cx="35" stroke="#ffffff" fill="#ffffff"/>
+  <ellipse id="hole2" ry="12" rx="12" cy="510" cx="35" stroke="#ffffff" fill="#ffffff"/>
+  <ellipse id="hole3" ry="12" rx="12" cy="910" cx="35" stroke="#ffffff" fill="#ffffff"/>
+ </g>
+</svg>
