@@ -254,12 +254,16 @@ overlay.addEventListener('click', () => {
 })
 
 xButton.addEventListener('click', () => {
+    oButton.classList.remove('button-active')
+    xButton.classList.add('button-active')
     Gameboard.clearBoard(Gameboard.getCellList())
     boot.setPlayerSign("X")
 
 })
 
 oButton.addEventListener('click', () => {
+    xButton.classList.remove('button-active')
+    oButton.classList.add('button-active')
     Gameboard.clearBoard(Gameboard.getCellList())
     boot.setPlayerSign("O")
 

@@ -4,7 +4,8 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    gap: 50px;
+    padding: 0;
+    margin: 0;
 
 
 }
@@ -14,6 +15,12 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
+    background-color: #2C74B3;
+    width: 100%;
+    height: 2%;
+    padding: 20px;
+    border-bottom: black solid 5px;
+
 
 }
 
@@ -25,7 +32,6 @@ body {
     align-items: center;
     background: center/contain no-repeat url("Images/doodles1920.svg");
     background-size: cover;
-    
 
 
 }
@@ -161,3 +167,22 @@ body {
     border-left: solid 2px black;
 }
 
+.button {
+
+    background-color: #f6f6f7;
+    border: solid 4px;
+    color: grey;
+    padding: 10px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+}
+
+.button-active {
+    color: black;
+    border-color: black;
+}
