@@ -5,12 +5,10 @@ body {
     height: 100vh;
     flex-direction: column;
     gap: 50px;
-    background-image: url("Images/Looseleaf_Legal_Pad_Background.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
 
 
 }
+
 
 .sign-container {
     display: flex;
@@ -23,7 +21,11 @@ body {
     display: flex;
     justify-content: center;
     height: 100vh;
+    width: 100vw;
     align-items: center;
+    background: center/contain no-repeat url("Images/doodles1920.svg");
+    background-size: cover;
+    
 
 
 }
