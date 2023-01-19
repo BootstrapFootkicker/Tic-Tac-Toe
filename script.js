@@ -1,6 +1,9 @@
 const xButton = document.querySelector("#x");
 const oButton = document.querySelector("#o");
 const overlay = document.querySelector('#overlay');
+const square1= document.querySelector('#square-1');
+const oImgArray = [];
+//oImgArray[0].src ='Images/o-1.svg'
 
 
 //module pattern
@@ -210,11 +213,12 @@ cellNodeList.forEach(cell => cell.addEventListener('click', () => {
     setInterval(() => {
         if (GameLogic.getTurn() === 1 && boot.getPlayerSign() === "O") {
             computerPlayer.computerPlay(Gameboard.getAvailableCells(), boot)
-            GameLogic.incrementTurn();
-        }
-        GameLogic.isDraw(Gameboard.getCellList());
-        GameLogic.isWin(Gameboard.getCellList());
 
+            GameLogic.incrementTurn();
+        } else {
+            GameLogic.isDraw(Gameboard.getCellList());
+            GameLogic.isWin(Gameboard.getCellList());
+        }
     }, 5)
 
 
@@ -265,6 +269,9 @@ oButton.addEventListener('click', () => {
     xButton.classList.remove('button-active')
     oButton.classList.add('button-active')
     Gameboard.clearBoard(Gameboard.getCellList())
+
     boot.setPlayerSign("O")
+    //makes computer go first when user picks O
+    square1.click();
 
 })
