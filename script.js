@@ -1,7 +1,7 @@
 const xButton = document.querySelector("#x");
 const oButton = document.querySelector("#o");
 const overlay = document.querySelector('#overlay');
-const square1= document.querySelector('#square-1');
+const square1 = document.querySelector('#square-1');
 const oImgArray = [];
 //oImgArray[0].src ='Images/o-1.svg'
 
@@ -259,7 +259,6 @@ overlay.addEventListener('click', () => {
 
 xButton.addEventListener('click', () => {
     oButton.classList.remove('button-active')
-    xButton.classList.add('button-active')
     Gameboard.clearBoard(Gameboard.getCellList())
     boot.setPlayerSign("X")
 
@@ -275,3 +274,5 @@ oButton.addEventListener('click', () => {
     square1.click();
 
 })
+
+xButton.classList.add('button-active')
