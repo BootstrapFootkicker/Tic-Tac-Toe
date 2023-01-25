@@ -18,7 +18,8 @@ body {
     background-color: #2C74B3;
     width: 100%;
     height: 2%;
-    padding: 20px;
+    padding-bottom: 20px;
+    padding-top:20px ;
     border-bottom: black solid 5px;
 
 
